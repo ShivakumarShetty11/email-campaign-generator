@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Bundle Offers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --primary: #2563EB;
+            --secondary: #1D4ED8;
+            --accent: #F59E0B;
+            --success: #059669;
+            --background: #EFF6FF;
+            --card-bg: #FFFFFF;
+            --text: #1F2937;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 2rem;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 4rem;
+        }
+
+        .bundle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .bundle-card {
+            background: var(--card-bg);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .bundle-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .bundle-header {
+            background: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .bundle-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .bundle-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+
+        .bundle-price .original {
+            font-size: 1rem;
+            text-decoration: line-through;
+            opacity: 0.7;
+            margin-right: 1rem;
+        }
+
+        .bundle-save {
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .bundle-items {
+            padding: 2rem;
+        }
+
+        .bundle-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .bundle-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 1rem;
+            background: #F3F4F6;
+            margin-right: 1rem;
+            overflow: hidden;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .item-price {
+            color: var(--success);
+            font-weight: 500;
+        }
+
+        .bundle-footer {
+            padding: 2rem;
+            background: #F9FAFB;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        .benefits {
+            margin-bottom: 2rem;
+        }
+
+        .benefit {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .benefit-icon {
+            margin-right: 1rem;
+            color: var(--success);
+        }
+
+        .claim-bundle {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            border-radius: 1rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .claim-bundle:hover {
+            background: var(--secondary);
+        }
+
+        .ribbon {
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 3rem;
+            transform: rotate(45deg);
+            font-size: 0.875rem;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .bundle-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                padding: 2rem 1rem;
+            }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 5px;
+            width: 75%;
+            animation: fillProgress 2s ease-out;
+        }
+
+        @keyframes fillProgress {
+            from { width: 0; }
+            to { width: 75%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header animate__animated animate__fadeIn">
+            <h1>Special Bundle Offers</h1>
+            <p>Save big with our carefully curated product bundles</p>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <p>75% of today's bundle quota claimed!</p>
+        </header>
+
+        <div class="bundle-grid">
+            <div class="bundle-card animate__animated animate__fadeInUp">
+                <div class="ribbon">Best Value</div>
+                <div class="bundle-header">
+                    <div class="bundle-name">Tech Essentials Bundle</div>
+                    <div class="bundle-price">
+                        <span class="original">$899</span>
+                        $599
+                    </div>
+                    <span class="bundle-save">Save 33%</span>
+                </div>
+                <div class="bundle-items">
+                    <div class="bundle-item">
+                        <div class="item-image">
+                            <img src="https://via.placeholder.com/80" alt="Wireless Headphones">
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name">Premium Wireless Headphones</div>
+                            <div class="item-price">$299 Value</div>
+                        </div>
+                    </div>
+                    <div class="bundle-item">
+                        <div class="item-image">
+                            <img src="https://via.placeholder.com/80" alt="Smartwatch">
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name">Smart Fitness Watch</div>
+                            <div class="item-price">$199 Value</div>
+                        </div>
+                    </div>
+                    <div class="bundle-item">
+                        <div class="item-image">
+                            <img src="https://via.placeholder.com/80" alt="Power Bank">
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name">20000mAh Power Bank</div>
+                            <div class="item-price">$79 Value</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bundle-footer">
+                    <div class="benefits">
+                        <div class="benefit">
+                            <span class="benefit-icon">✓</span>
+                            <span>Free Premium Carrying Case</span>
+                        </div>
+                        <div class="benefit">
+                            <span class="benefit-icon">✓</span>
+                            <span>Extended 2-Year Warranty</span>
+                        </div>
+                        <div class="benefit">
+                            <span class="benefit-icon">✓</span>
+                            <span>Priority Shipping</span>
+                        </div>
+                    </div>
+                    <a href="#" class="claim-bundle">Claim Bundle Now</a>
+                </div>
+            </div>
+            <!-- Duplicate bundle-card for more bundles -->
+        </div>
+    </div>
+
+    <script>
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.bundle-card').forEach(card => {
+                observer.observe(card);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', setupScrollAnimations);
+    </script>
+</body>
+</html>

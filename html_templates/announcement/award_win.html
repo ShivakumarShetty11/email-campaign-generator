@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Award Recognition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --primary-color: #14b8a6;
+            --secondary-color: #0d9488;
+            --accent-color: #f59e0b;
+            --bg-light: #f8fafc;
+            --text-dark: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 30px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .trophy-banner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50' y='50' text-anchor='middle' alignment-baseline='middle' font-size='40' fill='rgba(255,255,255,0.1)'%3E🏆%3C/text%3E%3C/svg%3E");
+            background-size: 100px 100px;
+            opacity: 0.1;
+            animation: shine 10s linear infinite;
+        }
+
+        .award-showcase {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(20, 184, 166, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .award-icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            animation: sparkle 2s linear infinite;
+        }
+
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 4em;
+            color: var(--primary-color);
+            opacity: 0.1;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .key-achievements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .achievement {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .achievement:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 10px 0;
+        }
+
+        .celebration-banner {
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--primary-color) 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: confetti 3s ease-in infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes shine {
+            0% { background-position: 0 0; }
+            100% { background-position: 100px 100px; }
+        }
+
+        @keyframes sparkle {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        @keyframes confetti {
+            0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .cta-section {
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(20, 184, 166, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .testimonials {
+                grid-template-columns: 1fr;
+            }
+
+            .key-achievements {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header animate__animated animate__fadeIn">
+            <div class="trophy-banner"></div>
+            <h1>Excellence in Innovation Award</h1>
+            <p>Recognizing Our Commitment to Excellence</p>
+        </div>
+
+        <div class="award-showcase animate__animated animate__zoomIn">
+            <div class="award-icon">🏆</div>
+            <h2>Industry Excellence Award 2025</h2>
+            <p>Awarded for outstanding contribution to technological innovation</p>
+        </div>
+
+        <div class="key-achievements">
+            <div class="achievement animate__animated animate__fadeInUp">
+                <div class="stat-number" id="projectCount">150+</div>
+                <p>Successful Projects</p>
+            </div>
+            <div class="achievement animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+                <div class="stat-number" id="clientCount">50K+</div>
+                <p>Happy Clients</p>
+            </div>
+            <div class="achievement animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
+                <div class="stat-number" id="teamCount">200+</div>
+                <p>Team Members</p>
+            </div>
+        </div>
+
+        <div class="testimonials">
+            <div class="testimonial-card animate__animated animate__fadeInLeft">
+                <p>"Their innovative approach has transformed our industry standards."</p>
+                <h4>John Doe</h4>
+                <p>Industry Expert</p>
+            </div>
+            <div class="testimonial-card animate__animated animate__fadeInRight">
+                <p>"A well-deserved recognition for their exceptional work."</p>
+                <h4>Jane Smith</h4>
+                <p>Technology Analyst</p>
+            </div>
+        </div>
+
+        <div class="celebration-banner animate__animated animate__fadeInUp">
+            <h2>Join Us in Celebration!</h2>
+            <p>This achievement wouldn't be possible without our amazing team and loyal customers.</p>
+        </div>
+
+        <div class="cta-section">
+            <h2>Learn More About Our Journey</h2>
+            <a href="#" class="cta-button">Read Our Story</a>
+        </div>
+    </div>
+
+    <script>
+        // Create sparkles
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 100 + '%';
+            document.querySelector('.award-showcase').appendChild(sparkle);
+            
+            setTimeout(() => sparkle.remove(), 2000);
+        }
+
+        setInterval(createSparkle, 300);
+
+        // Create confetti
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + '%';
+            confetti.style.backgroundColor = ['#14b8a6', '#0d9488', '#f59e0b'][Math.floor(Math.random() * 3)];
+            document.querySelector('.celebration-banner').appendChild(confetti);
+            
+            setTimeout(() => confetti.remove(), 3000);
+        }
+
+        setInterval(createConfetti, 200);
+
+        // Animate numbers
+        function animateNumber(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            
+            function updateNumber() {
+                start += increment;
+                if (start < target) {
+                    element.textContent = Math.floor(start) + '+';
+                    requestAnimationFrame(updateNumber);
+                } else {
+                    element.textContent = target + '+';
+                }
+            }
+            
+            updateNumber();
+        }
+
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.id === 'projectCount') animateNumber(entry.target, 150);
+                    if (entry.target.id === 'clientCount') animateNumber(entry.target, 50000);
+                    if (entry.target.id === 'teamCount') animateNumber(entry.target, 200);
+                }
+            });
+        });
+
+        document.querySelectorAll('.stat-number').forEach(stat => {
+            observer.observe(stat);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Personality Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8B5CF6;
+            --secondary-color: #7C3AED;
+            --background-color: #F5F3FF;
+            --text-color: #1F2937;
+            --accent-color: #C4B5FD;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .quiz-container {
+            background: white;
+            max-width: 600px;
+            width: 100%;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--accent-color);
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        .quiz-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .quiz-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .quiz-description {
+            font-size: 1rem;
+            opacity: 0.9;
+            position: relative;
+        }
+
+        .quiz-content {
+            padding: 2rem;
+        }
+
+        .question {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .question.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .options {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .option {
+            background: var(--background-color);
+            padding: 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option:hover {
+            transform: translateX(5px);
+            background: #EDE9FE;
+        }
+
+        .option.selected {
+            background: var(--primary-color);
+            color: white;
+            animation: pulse 0.5s ease-out;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+            }
+            50% {
+                transform: scale(1.02);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .option-text {
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+
+        .nav-button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            flex: 1;
+        }
+
+        .prev {
+            background: var(--background-color);
+            color: var(--primary-color);
+        }
+
+        .next {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .next:hover {
+            box-shadow: 0 8px 16px rgba(139, 92, 246, 0.2);
+        }
+
+        .result {
+            display: none;
+            text-align: center;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .result-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .result-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .result-description {
+            color: #6B7280;
+            margin-bottom: 2rem;
+        }
+
+        .restart-button {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .restart-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(139, 92, 246, 0.2);
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(1000%) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .quiz-container {
+                margin: 1rem;
+                border-radius: 16px;
+            }
+
+            .quiz-header {
+                padding: 1.5rem;
+            }
+
+            .quiz-content {
+                padding: 1.5rem;
+            }
+
+            .quiz-title {
+                font-size: 1.5rem;
+            }
+
+            .question-text {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="progress-bar"></div>
+        
+        <div class="quiz-header">
+            <div class="header-pattern"></div>
+            <h1 class="quiz-title">Discover Your Style</h1>
+            <p class="quiz-description">Take this quiz to find your perfect match!</p>
+        </div>
+
+        <div class="quiz-content">
+            <div class="question active" data-question="1">
+                <div class="question-text">What's your preferred color palette?</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this)">
+                        <div class="option-text">Vibrant and Bold</div>
+                    </div>
+                    <div class="option" onclick="selectOption(this)">
+                        <div class="option-text">Soft and Neutral</div>
+                    </div>
+                    <div class="option" onclick="selectOption(this)">
+                        <div class="option-text">Dark and Moody</div>
+                    </div>
+                    <div class="option" onclick="selectOption(this)">
+                        <div class="option-text">Bright and Playful</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question" data-question="2">
+                <div class="question-text">How would you describe your ideal workspace?</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this)">
+                        <div class="option-text">Minimalist and Clean</div>
+                    </div>
+                    <div class="option" onclick="selectOption(this)">
+                        <div class="option-text">Cozy and Comfortable</div>
+                    </div>
+                    <div class="option" onclick="selectOption(this)">
+                        <div class="option-text">Modern and Tech-Focused</div>
+                    </div>
+                    <div class="option" onclick="selectOption(this)">
+                        <div class="option-text">Creative and Inspiring</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question" data-question="3">
+                <div class="question-text">What's your approach to organization?</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this)">
+                        <div class="option-text">Meticulously Planned</div>
+                    </div>
+                    <div class="option" onclick="selectOption(this)">
+                        <div class="option-text">Flexibly Structured</div>
+                    </div>
+                    <div class="option" onclick="selectOption(this)">
+                        <div class="option-text">Creatively Chaotic</div>
+                    </div>
+                    <div class="option" onclick="selectOption(this)">
+                        <div class="option-text">Naturally Flowing</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result">
+                <div class="result-icon">🎨</div>
+                <h2 class="result-title">You're a Creative Innovator!</h2>
+                <p class="result-description">You have a unique blend of creativity and organization. Your style combines modern aesthetics with practical functionality.</p>
+                <button class="restart-button" onclick="restartQuiz()">Take Quiz Again</button>
+            </div>
+
+            <div class="navigation">
+                <button class="nav-button prev" onclick="navigate(-1)" style="display: none;">Previous</button>
+                <button class="nav-button next" onclick="navigate(1)">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+        const totalQuestions = 3;
+        let answers = [];
+
+        function updateProgress() {
+            const progress = (currentQuestion - 1) / totalQuestions * 100;
+            document.querySelector('.progress-bar').style.width = `${progress}%`;
+        }
+
+        function selectOption(element) {
+            const currentOptions = document.querySelectorAll(`.question[data-question="${currentQuestion}"] .option`);
+            currentOptions.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+
+            const audio = new Audio('data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAASAAAeMwAUFBQUFCIiIiIiIjAwMDAwPz8/Pz8/TU1NTU1NW1tbW1tbaGhoaGhoaHd3d3d3d4aGhoaGhpSUlJSUlKOjo6Ojo6OysrKysrLAwMDAwMDO3d3d3d3d6urq6urq8fHx8fHx+fn5+fn5+f////8AAAAATGF2YzU4LjEzAAAAAAAAAAAAAAAAJAAAAAAAAAAAHjMxTPmUAAAAAAAAAAAAAAAAAAAA//sQZAAP8AAAaQAAAAgAAA0gAAABAAABpAAAACAAADSAAAAETEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//sQZF4P8AAAaQAAAAgAAA0gAAABAAABpAAAACAAADSAAAAEVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV');
+            audio.play();
+        }
+
+        function navigate(direction) {
+            const currentOptions = document.querySelectorAll(`.question[data-question="${currentQuestion}"] .option.selected`);
+            if (direction > 0 && currentOptions.length === 0) {
+                const question = document.querySelector(`.question[data-question="${currentQuestion}"]`);
+                question.style.animation = 'shake 0.5s ease-out';
+                setTimeout(() => {
+                    question.style.animation = '';
+                }, 500);
+                return;
+            }
+
+            if (currentOptions.length > 0) {
+                answers[currentQuestion - 1] = currentOptions[0].textContent.trim();
+            }
+
+            const newQuestion = currentQuestion + direction;
+            if (newQuestion < 1 || newQuestion > totalQuestions + 1) return;
+
+            document.querySelector(`.question[data-question="${currentQuestion}"]`).classList.remove('active');
+            currentQuestion = newQuestion;
+
+            if (currentQuestion <= totalQuestions) {
+                document.querySelector(`.question[data-question="${currentQuestion}"]`).classList.add('active');
+                document.querySelector('.prev').style.display = currentQuestion === 1 ? 'none' : 'block';
+                document.querySelector('.next').textContent = currentQuestion === totalQuestions ? 'Finish' : 'Next';
+            } else {
+                showResult();
+            }
+
+            updateProgress();
+        }
+
+        function showResult() {
+            document.querySelector('.navigation').style.display = 'none';
+            document.querySelector('.result').style.display = 'block';
+            createConfetti();
+        }
+
+        function createConfetti() {
+            const colors = ['#8B5CF6', '#7C3AED', '#C4B5FD', '#4F46E5'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animation = `confetti-fall ${Math.random() * 3 + 2}s linear forwards`;
+                document.querySelector('.quiz-container').appendChild(confetti);
+            }
+        }
+
+        function restartQuiz() {
+            currentQuestion = 1;
+            answers = [];
+            document.querySelector('.result').style.display = 'none';
+            document.querySelector('.navigation').style.display = 'flex';
+            document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+            document.querySelector('.question[data-question="1"]').classList.add('active');
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            document.querySelector('.next').textContent = 'Next';
+            document.querySelector('.prev').style.display = 'none';
+            document.querySelectorAll('.confetti').forEach(c => c.remove());
+            updateProgress();
+        }
+
+        updateProgress();
+    </script>
+</body>
+</html>

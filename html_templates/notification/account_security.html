@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Security Alert</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FF6B6B;
+            --secondary-color: #4ECDC4;
+            --background-color: #F8F9FA;
+            --text-color: #343A40;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 90%;
+            margin: 20px;
+            position: relative;
+        }
+
+        .notification-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .security-icon {
+            background: linear-gradient(135deg, var(--primary-color), #FF8B8B);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2.5em;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        h1 {
+            color: var(--text-color);
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.8em;
+        }
+
+        .alert-message {
+            background: rgba(255, 107, 107, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            animation: slideRight 0.5s ease-out;
+        }
+
+        .steps {
+            margin: 30px 0;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin: 15px 0;
+            padding: 15px;
+            background: var(--background-color);
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        .step:nth-child(1) { animation-delay: 0.2s; }
+        .step:nth-child(2) { animation-delay: 0.4s; }
+        .step:nth-child(3) { animation-delay: 0.6s; }
+
+        .step:hover {
+            transform: translateX(10px);
+        }
+
+        .step-number {
+            background: var(--secondary-color);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--primary-color), #FF8B8B);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            width: 100%;
+            margin-top: 20px;
+            animation: bounce 1s ease-out infinite;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .security-ripple {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, 
+                rgba(255, 107, 107, 0.1) 0%, 
+                rgba(255, 107, 107, 0.05) 50%, 
+                transparent 70%);
+            border-radius: 50%;
+            animation: ripple 4s infinite;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideRight {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .highlight {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+            }
+
+            .notification-card {
+                padding: 20px;
+            }
+        }
+
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #adb5bd;
+            transition: color 0.3s ease;
+        }
+
+        .close-button:hover {
+            color: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="notification-card">
+            <div class="security-ripple"></div>
+            <button class="close-button">×</button>
+            
+            <div class="security-icon">🔒</div>
+            <h1>Security Alert</h1>
+            
+            <div class="alert-message">
+                <p>We've detected unusual activity on your account from a new device in <span class="highlight">San Francisco, CA</span></p>
+            </div>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <strong>New Login Detected</strong>
+                        <p>Device: MacBook Pro<br>Time: June 11, 2025, 14:30 PST</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <strong>Review Activity</strong>
+                        <p>Check your recent account activity and verify all login attempts.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <strong>Take Action</strong>
+                        <p>If this wasn't you, secure your account immediately by changing your password.</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="button">Secure My Account</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add ripple effects
+            function createRipple() {
+                const card = document.querySelector('.notification-card');
+                const ripple = document.createElement('div');
+                ripple.className = 'security-ripple';
+                ripple.style.left = Math.random() * 400 + 'px';
+                ripple.style.top = Math.random() * 400 + 'px';
+                card.appendChild(ripple);
+
+                ripple.addEventListener('animationend', () => {
+                    ripple.remove();
+                });
+            }
+
+            setInterval(createRipple, 4000);
+
+            // Add click handlers
+            const closeButton = document.querySelector('.close-button');
+            closeButton.addEventListener('click', () => {
+                document.querySelector('.notification-card').style.animation = 'fadeOut 0.5s forwards';
+                setTimeout(() => {
+                    document.querySelector('.container').style.display = 'none';
+                }, 500);
+            });
+
+            // Animate steps sequentially
+            const steps = document.querySelectorAll('.step');
+            steps.forEach((step, index) => {
+                setTimeout(() => {
+                    step.style.opacity = '1';
+                }, 200 * index);
+            });
+
+            // Add hover effect sound
+            const button = document.querySelector('.button');
+            button.addEventListener('mouseenter', () => {
+                const audio = new Audio('data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4LjI5LjEwMAAAAAAAAAAAAAAA//tQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAAFbgBtbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1t//////////////////////////////////////////////////////////////////8AAAAATGF2YzU4LjU0AAAAAAAAAAAAAAAAJAAAAAAAAAAAAQVuiZi6AAAAAAAAAAAAAAAAAAAAAP/7kGQAAANUMEEFPeAEKYYX+JmksQ8YwQUR94AQlhhg4GaQoAAAAAgADhhPIEOCDggQ5P4IBBBD7qJBv/OSCf1ggEHkgg8vkH35BBBBB/5/RB44IMIABBBBAMQQcMQOCBwQIcHQQQQQQQQQQQQQQQQQBAEAQBAMQQBAEAQBAEAQBAMQQBAEAQBAEAQBAMQQBAEAQBAEAQBAMQQBAEAQBAEAQBCEIQhCEIQhCEIQhCEIAAAABkYkznAAAIAAAAAgCAIZGXOcAAAgAAAAGRiTO8AQBCEIQhCEAAABAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAAQ');
+                audio.play();
+            });
+        });
+    </script>
+</body>
+</html>

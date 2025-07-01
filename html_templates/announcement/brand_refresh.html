@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Refresh Unveiling</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="white" stroke-width="0.5" fill="none" opacity="0.2"/></svg>');
+            background-size: 50px 50px;
+            animation: rotate 60s linear infinite;
+        }
+        
+        .brand-timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #14b8a6;
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .timeline-content {
+            width: 45%;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+        }
+        
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #14b8a6;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .timeline-left {
+            margin-right: auto;
+        }
+        
+        .timeline-right {
+            margin-left: auto;
+        }
+        
+        .timeline-left::before {
+            right: -60px;
+        }
+        
+        .timeline-right::before {
+            left: -60px;
+        }
+        
+        .brand-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .showcase-item {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .showcase-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+        }
+        
+        .showcase-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #14b8a6;
+        }
+        
+        .logo-comparison {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin: 40px 0;
+            padding: 40px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+        
+        .logo-container {
+            text-align: center;
+        }
+        
+        .logo-placeholder {
+            width: 200px;
+            height: 200px;
+            background: #f1f5f9;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-placeholder:hover {
+            transform: scale(1.05);
+        }
+        
+        .arrow-icon {
+            font-size: 2em;
+            color: #14b8a6;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin: 60px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+            border-radius: 20px;
+            color: white;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: white;
+            color: #14b8a6;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @media only screen and (max-width: 768px) {
+            .timeline-line {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                flex-direction: column;
+            }
+            
+            .timeline-content {
+                width: 100%;
+                margin-left: 40px;
+            }
+            
+            .timeline-content::before {
+                left: -50px;
+            }
+            
+            .logo-comparison {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header animate__animated animate__fadeIn">
+            <h1>Brand Refresh Unveiling</h1>
+            <p>A New Chapter in Our Visual Story</p>
+        </header>
+        
+        <div class="brand-timeline">
+            <div class="timeline-line"></div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content timeline-left">
+                    <h3>Our Heritage</h3>
+                    <p>A decade of building trust and delivering excellence</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content timeline-right">
+                    <h3>Evolution</h3>
+                    <p>Adapting to changing market dynamics and customer needs</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content timeline-left">
+                    <h3>The New Era</h3>
+                    <p>Embracing innovation while honoring our core values</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="logo-comparison animate__animated animate__fadeInUp">
+            <div class="logo-container">
+                <div class="logo-placeholder">
+                    <span style="color: #64748b;">Previous Logo</span>
+                </div>
+                <p>Then</p>
+            </div>
+            <div class="arrow-icon">→</div>
+            <div class="logo-container">
+                <div class="logo-placeholder">
+                    <span style="color: #64748b;">New Logo</span>
+                </div>
+                <p>Now</p>
+            </div>
+        </div>
+        
+        <div class="brand-showcase">
+            <div class="showcase-item animate__animated animate__fadeInUp">
+                <div class="showcase-icon">🎯</div>
+                <h3>New Vision</h3>
+                <p>Expanding horizons with bold aspirations</p>
+            </div>
+            
+            <div class="showcase-item animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+                <div class="showcase-icon">💫</div>
+                <h3>Fresh Look</h3>
+                <p>Modern design that resonates with our audience</p>
+            </div>
+            
+            <div class="showcase-item animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                <div class="showcase-icon">💡</div>
+                <h3>Innovation</h3>
+                <p>Pushing boundaries in digital experience</p>
+            </div>
+        </div>
+        
+        <div class="cta-section animate__animated animate__fadeIn">
+            <h2>Experience Our New Brand</h2>
+            <p>Join us on this exciting journey of transformation</p>
+            <a href="#" class="cta-button">Explore More</a>
+        </div>
+    </div>
+    
+    <script>
+        // Reveal timeline items on scroll
+        function revealTimelineItems() {
+            const items = document.querySelectorAll('.timeline-item');
+            
+            items.forEach(item => {
+                const itemTop = item.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (itemTop < windowHeight * 0.75) {
+                    item.classList.add('visible');
+                }
+            });
+        }
+        
+        // Listen for scroll events
+        window.addEventListener('scroll', revealTimelineItems);
+        window.addEventListener('load', revealTimelineItems);
+        
+        // Add hover effects
+        document.querySelectorAll('.showcase-item').forEach(item => {
+            item.addEventListener('mouseover', () => {
+                item.style.transform = 'translateY(-10px)';
+            });
+            
+            item.addEventListener('mouseout', () => {
+                item.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>

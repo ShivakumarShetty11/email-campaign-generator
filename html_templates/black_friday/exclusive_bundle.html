@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exclusive Black Friday Bundles</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background-color: #0f172a;
+            color: white;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, #ef4444 0%, #7c3aed 50%, #3b82f6 100%);
+            opacity: 0.1;
+            animation: gradientFlow 10s ease infinite;
+        }
+        
+        .bundle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .bundle-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .bundle-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.3);
+        }
+        
+        .bundle-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ef4444, #7c3aed, #3b82f6);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+        
+        .bundle-card:hover::before {
+            opacity: 0.1;
+        }
+        
+        .bundle-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .bundle-tag {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ef4444;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9em;
+            animation: pulse 2s infinite;
+        }
+        
+        .bundle-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        
+        .bundle-items {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .bundle-items li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .bundle-items li:last-child {
+            border-bottom: none;
+        }
+        
+        .item-icon {
+            font-size: 1.2em;
+        }
+        
+        .bundle-price {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .original-price {
+            text-decoration: line-through;
+            color: #94a3b8;
+        }
+        
+        .discounted-price {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #ef4444;
+        }
+        
+        .bundle-button {
+            display: inline-block;
+            width: 100%;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #ef4444, #7c3aed);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bundle-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .bundle-button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        
+        .countdown {
+            text-align: center;
+            margin: 40px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+        }
+        
+        .countdown-title {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .time-block {
+            text-align: center;
+        }
+        
+        .time-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: #ef4444;
+            background: rgba(239,68,68,0.1);
+            padding: 10px 15px;
+            border-radius: 10px;
+            min-width: 70px;
+            display: inline-block;
+        }
+        
+        .time-label {
+            font-size: 0.8em;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+        
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes shine {
+            0% { transform: rotate(45deg) translateX(-100%); }
+            100% { transform: rotate(45deg) translateX(100%); }
+        }
+        
+        @media only screen and (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .bundle-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .countdown-timer {
+                flex-wrap: wrap;
+            }
+            
+            .time-block {
+                flex: 1 1 40%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="animate__animated animate__fadeInDown">Exclusive Black Friday Bundles</h1>
+            <p class="animate__animated animate__fadeIn animate__delay-1s">Curated packages at unbeatable prices</p>
+        </header>
+        
+        <div class="countdown animate__animated animate__fadeIn">
+            <h2 class="countdown-title">Bundle Deals End In:</h2>
+            <div class="countdown-timer">
+                <div class="time-block">
+                    <div class="time-value" id="hours">24</div>
+                    <div class="time-label">Hours</div>
+                </div>
+                <div class="time-block">
+                    <div class="time-value" id="minutes">00</div>
+                    <div class="time-label">Minutes</div>
+                </div>
+                <div class="time-block">
+                    <div class="time-value" id="seconds">00</div>
+                    <div class="time-label">Seconds</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bundle-grid">
+            <div class="bundle-card animate__animated animate__fadeInLeft">
+                <span class="bundle-tag">SAVE 70%</span>
+                <div class="bundle-content">
+                    <h3 class="bundle-title">Premium Tech Bundle</h3>
+                    <ul class="bundle-items">
+                        <li><span class="item-icon">📱</span> Latest Smartphone</li>
+                        <li><span class="item-icon">⌚</span> Smart Watch</li>
+                        <li><span class="item-icon">🎧</span> Wireless Earbuds</li>
+                        <li><span class="item-icon">🔋</span> Power Bank</li>
+                    </ul>
+                    <div class="bundle-price">
+                        <span class="original-price">$1,499</span>
+                        <span class="discounted-price">$449</span>
+                    </div>
+                    <a href="#" class="bundle-button">Claim Bundle</a>
+                </div>
+            </div>
+            
+            <div class="bundle-card animate__animated animate__fadeInRight">
+                <span class="bundle-tag">SAVE 65%</span>
+                <div class="bundle-content">
+                    <h3 class="bundle-title">Gaming Paradise Pack</h3>
+                    <ul class="bundle-items">
+                        <li><span class="item-icon">🎮</span> Gaming Console</li>
+                        <li><span class="item-icon">🕹️</span> 2 Controllers</li>
+                        <li><span class="item-icon">🎲</span> 3 Premium Games</li>
+                        <li><span class="item-icon">🎧</span> Gaming Headset</li>
+                    </ul>
+                    <div class="bundle-price">
+                        <span class="original-price">$899</span>
+                        <span class="discounted-price">$314</span>
+                    </div>
+                    <a href="#" class="bundle-button">Claim Bundle</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Countdown Timer
+        function updateCountdown() {
+            const now = new Date();
+            const midnight = new Date();
+            midnight.setHours(23,59,59);
+            
+            const diff = midnight - now;
+            
+            const hours = Math.floor(diff / 3600000);
+            const minutes = Math.floor((diff % 3600000) / 60000);
+            const seconds = Math.floor((diff % 60000) / 1000);
+            
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+        
+        // Update timer every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // Bundle card hover effects
+        document.querySelectorAll('.bundle-card').forEach(card => {
+            card.addEventListener('mouseover', () => {
+                card.style.transform = 'translateY(-10px)';
+            });
+            
+            card.addEventListener('mouseout', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>

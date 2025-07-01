@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Collaboration Announcement</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --primary-color: #14b8a6;
+            --secondary-color: #0d9488;
+            --accent-color: #3b82f6;
+            --bg-light: #f8fafc;
+            --text-dark: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 30px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(20, 184, 166, 0.2);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54 28h-8v8h8v-8zm-8-8h-8v8h8v-8zm-8 0h-8v8h8v-8zm-8 0h-8v8h8v-8zm8 8h-8v8h8v-8zm-8 0h-8v8h8v-8z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.1;
+        }
+
+        .company-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin: 40px 0;
+        }
+
+        .logo-container {
+            width: 200px;
+            height: 200px;
+            background: white;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .logo-container.company-1 {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .logo-container.company-2 {
+            animation: float 3s ease-in-out infinite 1.5s;
+        }
+
+        .plus-icon {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            animation: pulse 2s infinite;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .benefit-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefit-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .benefit-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .benefit-icon {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .collaboration-details {
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            margin: 40px 0;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.5s ease forwards;
+        }
+
+        .detail-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin: 60px 0;
+            padding: 60px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(20, 184, 166, 0.2);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .company-logos {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .logo-container {
+                width: 150px;
+                height: 150px;
+            }
+
+            .collaboration-details {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header animate__animated animate__fadeIn">
+            <h1>Strategic Partnership Announcement</h1>
+            <p>Two Industry Leaders Unite for Innovation</p>
+        </div>
+
+        <div class="company-logos">
+            <div class="logo-container company-1">
+                Company 1
+            </div>
+            <div class="plus-icon">+</div>
+            <div class="logo-container company-2">
+                Company 2
+            </div>
+        </div>
+
+        <div class="benefits-grid">
+            <div class="benefit-card animate__animated animate__fadeInUp">
+                <div class="benefit-icon">🤝</div>
+                <h3>Combined Expertise</h3>
+                <p>Leveraging our collective strengths to deliver superior solutions</p>
+            </div>
+
+            <div class="benefit-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+                <div class="benefit-icon">🎯</div>
+                <h3>Market Leadership</h3>
+                <p>Setting new industry standards through innovation</p>
+            </div>
+
+            <div class="benefit-card animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
+                <div class="benefit-icon">🚀</div>
+                <h3>Future Growth</h3>
+                <p>Expanding possibilities for sustainable development</p>
+            </div>
+        </div>
+
+        <div class="collaboration-details">
+            <h2>Partnership Highlights</h2>
+            <div class="detail-item" style="animation-delay: 0.2s">
+                <div class="detail-icon">📈</div>
+                <div>
+                    <h3>Enhanced Value Proposition</h3>
+                    <p>Combining resources to deliver unmatched customer value</p>
+                </div>
+            </div>
+
+            <div class="detail-item" style="animation-delay: 0.4s">
+                <div class="detail-icon">🌍</div>
+                <div>
+                    <h3>Global Reach</h3>
+                    <p>Expanding our presence across international markets</p>
+                </div>
+            </div>
+
+            <div class="detail-item" style="animation-delay: 0.6s">
+                <div class="detail-icon">💡</div>
+                <div>
+                    <h3>Innovation Focus</h3>
+                    <p>Joint R&D initiatives for groundbreaking solutions</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Join Us on This Journey</h2>
+            <p>Learn more about how this partnership will transform the industry</p>
+            <a href="#" class="cta-button">Discover More</a>
+        </div>
+    </div>
+
+    <script>
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationDelay = entry.target.dataset.delay || '0s';
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.5 });
+
+        // Observe all animatable elements
+        document.querySelectorAll('.benefit-card, .detail-item').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Dynamic company logo animation
+        function animateLogos() {
+            const logos = document.querySelectorAll('.logo-container');
+            logos.forEach(logo => {
+                logo.style.transform = `translateY(${Math.random() * 10}px)`;
+            });
+        }
+
+        setInterval(animateLogos, 2000);
+    </script>
+</body>
+</html>

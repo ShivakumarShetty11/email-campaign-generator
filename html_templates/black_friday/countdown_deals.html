@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Deals Spectacular</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --accent-color: #f43f5e;
+            --accent-gradient: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+            --card-bg: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-dark);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 50px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .countdown-box {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            min-width: 100px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+
+        .countdown-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 5px;
+        }
+
+        .countdown-label {
+            font-size: 0.9em;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+
+        .deals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .deal-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .deal-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .deal-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            transform-origin: left;
+        }
+
+        .deal-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .deal-timing {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .deal-image {
+            width: 100%;
+            height: 180px;
+            background: #2d3748;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+        }
+
+        .price-tag {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #94a3b8;
+            font-size: 1.1em;
+        }
+
+        .sale-price {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .savings {
+            display: inline-block;
+            background: rgba(244, 63, 94, 0.1);
+            color: var(--accent-color);
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            width: 100%;
+            padding: 15px;
+            background: var(--accent-gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: transform 0.2s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .countdown-container {
+                flex-wrap: wrap;
+            }
+
+            .countdown-box {
+                min-width: 80px;
+            }
+
+            .deals-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .flash {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            animation: flash 3s infinite;
+        }
+
+        @keyframes flash {
+            0% { left: -100%; }
+            100% { left: 200%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header animate__animated animate__fadeIn">
+            <h1>Countdown Deals Spectacular</h1>
+            <p>Don't miss out on these time-limited offers!</p>
+        </div>
+
+        <div class="countdown-container">
+            <div class="countdown-box">
+                <div class="countdown-number" id="hours">23</div>
+                <div class="countdown-label">Hours</div>
+            </div>
+            <div class="countdown-box">
+                <div class="countdown-number" id="minutes">59</div>
+                <div class="countdown-label">Minutes</div>
+            </div>
+            <div class="countdown-box">
+                <div class="countdown-number" id="seconds">59</div>
+                <div class="countdown-label">Seconds</div>
+            </div>
+        </div>
+
+        <div class="deals-grid">
+            <div class="deal-card animate__animated animate__fadeInUp">
+                <div class="deal-timing">Ends in 4 hours</div>
+                <div class="deal-image">📱</div>
+                <div class="flash"></div>
+                <h3>Latest Smartphone</h3>
+                <p>128GB, 5G Ready, Triple Camera</p>
+                <div class="price-tag">
+                    <span class="original-price">$999</span>
+                    <span class="sale-price">$699</span>
+                    <span class="savings">Save 30%</span>
+                </div>
+                <a href="#" class="cta-button">Claim Deal</a>
+            </div>
+
+            <div class="deal-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+                <div class="deal-timing">Ends in 2 hours</div>
+                <div class="deal-image">💻</div>
+                <div class="flash"></div>
+                <h3>Gaming Laptop</h3>
+                <p>RTX 3060, 16GB RAM, 1TB SSD</p>
+                <div class="price-tag">
+                    <span class="original-price">$1499</span>
+                    <span class="sale-price">$1099</span>
+                    <span class="savings">Save 27%</span>
+                </div>
+                <a href="#" class="cta-button">Claim Deal</a>
+            </div>
+
+            <div class="deal-card animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
+                <div class="deal-timing">Ends in 6 hours</div>
+                <div class="deal-image">🎧</div>
+                <div class="flash"></div>
+                <h3>Wireless Headphones</h3>
+                <p>Active Noise Cancelling, 30h Battery</p>
+                <div class="price-tag">
+                    <span class="original-price">$299</span>
+                    <span class="sale-price">$199</span>
+                    <span class="savings">Save 33%</span>
+                </div>
+                <a href="#" class="cta-button">Claim Deal</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Countdown Timer
+        function updateCountdown() {
+            const now = new Date();
+            const end = new Date();
+            end.setHours(23, 59, 59);
+            
+            const diff = end - now;
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                }
+            });
+        });
+
+        document.querySelectorAll('.deal-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

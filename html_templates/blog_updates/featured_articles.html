@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Featured Articles</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 16px 16px 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .content {
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        
+        .article-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .article-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .article-image {
+            width: 100%;
+            height: 200px;
+            background: #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .article-card:hover .article-image img {
+            transform: scale(1.05);
+        }
+        
+        .article-content {
+            padding: 20px;
+        }
+        
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #64748b;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .article-category {
+            background: #818cf8;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+        }
+        
+        .article-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1e293b;
+            line-height: 1.4;
+        }
+        
+        .article-excerpt {
+            color: #475569;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: 500;
+            transition: gap 0.3s ease;
+        }
+        
+        .read-more:hover {
+            gap: 10px;
+        }
+        
+        .read-more::after {
+            content: '→';
+        }
+        
+        .trending-topics {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f1f5f9;
+            border-radius: 12px;
+        }
+        
+        .topic-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .topic-tag {
+            background: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: #6366f1;
+            font-size: 0.9em;
+            transition: background 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .topic-tag:hover {
+            background: #818cf8;
+            color: white;
+        }
+        
+        .stats {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #64748b;
+            font-size: 0.9em;
+        }
+        
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.9em;
+        }
+        
+        @media only screen and (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .article-meta {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            
+            .stats {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header blog_updates">
+            <h1 class="animate__animated animate__fadeInDown">Featured Articles</h1>
+        </div>
+        
+        <div class="content">
+            <div class="article-grid">
+                <article class="article-card animate__animated animate__fadeInUp">
+                    <div class="article-image">
+                        <img src="https://via.placeholder.com/600x400" alt="Tech Innovation">
+                    </div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span class="article-category">Technology</span>
+                            <span>By Alex Chen</span>
+                            <div class="stats">
+                                <span class="stat">👁️ 1.2k views</span>
+                                <span class="stat">💬 24 comments</span>
+                            </div>
+                        </div>
+                        <h2 class="article-title">The Future of AI in Web Development</h2>
+                        <p class="article-excerpt">Explore how artificial intelligence is revolutionizing the way we build and maintain websites, making development more efficient and accessible.</p>
+                        <a href="#" class="read-more">Read Article</a>
+                    </div>
+                </article>
+                
+                <article class="article-card animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+                    <div class="article-image">
+                        <img src="https://via.placeholder.com/600x400" alt="Design Trends">
+                    </div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span class="article-category">Design</span>
+                            <span>By Sarah Miller</span>
+                            <div class="stats">
+                                <span class="stat">👁️ 958 views</span>
+                                <span class="stat">💬 18 comments</span>
+                            </div>
+                        </div>
+                        <h2 class="article-title">2025 UI/UX Design Trends to Watch</h2>
+                        <p class="article-excerpt">Discover the latest trends shaping the future of user interface and experience design, from neumorphism to adaptive interfaces.</p>
+                        <a href="#" class="read-more">Read Article</a>
+                    </div>
+                </article>
+            </div>
+            
+            <div class="trending-topics">
+                <h3>Popular Topics</h3>
+                <div class="topic-tags">
+                    <span class="topic-tag"># Technology</span>
+                    <span class="topic-tag"># Design</span>
+                    <span class="topic-tag"># Innovation</span>
+                    <span class="topic-tag"># Development</span>
+                    <span class="topic-tag"># AI</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 Your Company Name. All rights reserved.</p>
+            <p>
+                <a href="#" style="color: #64748b;">Unsubscribe</a> | 
+                <a href="#" style="color: #64748b;">Privacy Policy</a>
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Add hover effects to topic tags
+        document.querySelectorAll('.topic-tag').forEach(tag => {
+            tag.addEventListener('mouseover', () => {
+                tag.style.background = '#818cf8';
+                tag.style.color = 'white';
+            });
+            
+            tag.addEventListener('mouseout', () => {
+                tag.style.background = 'white';
+                tag.style.color = '#6366f1';
+            });
+        });
+    </script>
+</body>
+</html>

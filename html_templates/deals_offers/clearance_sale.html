@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clearance Sale Deals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --primary: #DC2626;
+            --secondary: #991B1B;
+            --accent: #FBBF24;
+            --background: #FEF2F2;
+            --card-bg: #FFFFFF;
+            --text: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .marquee {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            font-weight: 700;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .header {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: var(--primary);
+            color: white;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .clearance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .clearance-card {
+            background: var(--card-bg);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            transition: transform 0.3s ease;
+        }
+
+        .clearance-card:hover {
+            transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
+        }
+
+        .sale-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--accent);
+            color: var(--text);
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: 900;
+            font-size: 1.2rem;
+            transform: rotate(15deg);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            animation: wobble 3s infinite;
+        }
+
+        @keyframes wobble {
+            0%, 100% { transform: rotate(15deg); }
+            50% { transform: rotate(-5deg); }
+        }
+
+        .product-image {
+            position: relative;
+            padding-top: 75%;
+            background: #F3F4F6;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .clearance-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .stock-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #E5E7EB;
+        }
+
+        .stock-level {
+            height: 100%;
+            background: var(--accent);
+            width: var(--stock);
+            transition: width 1s ease;
+        }
+
+        .product-details {
+            padding: 1.5rem;
+        }
+
+        .category {
+            font-size: 0.875rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .price-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .original-price {
+            color: #6B7280;
+            text-decoration: line-through;
+            font-size: 1rem;
+        }
+
+        .sale-price {
+            color: var(--primary);
+            font-size: 1.75rem;
+            font-weight: 900;
+        }
+
+        .stock-text {
+            font-size: 0.875rem;
+            color: #374151;
+            margin-bottom: 1rem;
+        }
+
+        .buy-now {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 0.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .buy-now:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .time-unit {
+            background: var(--text);
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .time-value {
+            font-size: 2rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .time-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .countdown {
+                gap: 0.5rem;
+            }
+
+            .time-unit {
+                min-width: 60px;
+                padding: 0.75rem;
+            }
+
+            .time-value {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="marquee">
+        <div class="marquee-content">
+            🔥 CLEARANCE SALE - UP TO 80% OFF! 🔥 LIMITED TIME ONLY! 🔥 WHILE STOCKS LAST! 🔥 CLEARANCE SALE - UP TO 80% OFF! 🔥
+        </div>
+    </div>
+
+    <header class="header animate__animated animate__fadeIn">
+        <h1>FINAL CLEARANCE</h1>
+        <p>Everything Must Go! Don't Miss Out on These Incredible Deals!</p>
+        <div class="countdown">
+            <div class="time-unit">
+                <div class="time-value" id="days">02</div>
+                <div class="time-label">Days</div>
+            </div>
+            <div class="time-unit">
+                <div class="time-value" id="hours">23</div>
+                <div class="time-label">Hours</div>
+            </div>
+            <div class="time-unit">
+                <div class="time-value" id="minutes">59</div>
+                <div class="time-label">Minutes</div>
+            </div>
+            <div class="time-unit">
+                <div class="time-value" id="seconds">59</div>
+                <div class="time-label">Seconds</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="clearance-grid">
+            <div class="clearance-card animate__animated animate__fadeInUp">
+                <div class="sale-badge">-70%</div>
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/400x300" alt="Product">
+                    <div class="stock-bar">
+                        <div class="stock-level" style="--stock: 30%"></div>
+                    </div>
+                </div>
+                <div class="product-details">
+                    <div class="category">Electronics</div>
+                    <h3 class="product-title">4K Smart TV 55"</h3>
+                    <div class="price-container">
+                        <span class="original-price">$999</span>
+                        <span class="sale-price">$299</span>
+                    </div>
+                    <p class="stock-text">⚠️ Only 3 units left in stock!</p>
+                    <a href="#" class="buy-now">Buy Now</a>
+                </div>
+            </div>
+
+            <!-- Add more clearance-card elements here -->
+        </div>
+    </div>
+
+    <script>
+        // Countdown Timer
+        function updateCountdown() {
+            const now = new Date();
+            const end = new Date();
+            end.setDate(end.getDate() + 2); // 2 days from now
+            end.setHours(23, 59, 59, 999);
+
+            const diff = end - now;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        // Update stock levels randomly
+        function updateStockLevels() {
+            document.querySelectorAll('.stock-level').forEach(el => {
+                const currentStock = parseInt(el.style.getPropertyValue('--stock'));
+                if (currentStock > 5) {
+                    el.style.setProperty('--stock', `${currentStock - 1}%`);
+                }
+            });
+        }
+
+        setInterval(updateCountdown, 1000);
+        setInterval(updateStockLevels, 5000);
+        updateCountdown();
+
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate__fadeInUp');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
+
+        document.querySelectorAll('.clearance-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

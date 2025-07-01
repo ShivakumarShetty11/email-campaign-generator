@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest Blog Updates</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 16px 16px 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: pulse 2s infinite;
+        }
+        
+        .content {
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        
+        .blog-posts {
+            margin: 30px 0;
+        }
+        
+        .blog-post {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .blog-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+        
+        .blog-meta {
+            font-size: 0.9em;
+            color: #64748b;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .category-tag {
+            background: #818cf8;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 0.8em;
+        }
+        
+        .post-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+        
+        .post-excerpt {
+            color: #475569;
+            margin-bottom: 15px;
+        }
+        
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: 500;
+            transition: gap 0.3s ease;
+        }
+        
+        .read-more:hover {
+            gap: 10px;
+        }
+        
+        .read-more::after {
+            content: '→';
+        }
+        
+        .featured-post {
+            background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .featured-post .post-title {
+            color: white;
+        }
+        
+        .featured-post .post-excerpt {
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .featured-tag {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+        
+        .subscribe-button {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: transform 0.3s ease;
+            margin-top: 15px;
+        }
+        
+        .subscribe-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.9em;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        
+        @media only screen and (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .blog-meta {
+                flex-direction: column;
+                gap: 5px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="animate__animated animate__fadeInDown">Latest from Our Blog</h1>
+        </div>
+        
+        <div class="content">
+            <div class="featured-post animate__animated animate__fadeIn">
+                <span class="featured-tag">Featured Post</span>
+                <h2 class="post-title">10 Tech Trends That Will Shape 2025</h2>
+                <div class="blog-meta">
+                    <span>By John Doe</span>
+                    <span>5 min read</span>
+                </div>
+                <p class="post-excerpt">Discover the emerging technologies that will revolutionize the way we live and work in the coming year.</p>
+                <a href="#" class="read-more" style="color: white;">Read Article</a>
+            </div>
+            
+            <div class="blog-posts">
+                <article class="blog-post animate__animated animate__fadeInUp">
+                    <div class="blog-meta">
+                        <span class="category-tag">Industry News</span>
+                        <span>By Jane Smith</span>
+                        <span>3 min read</span>
+                    </div>
+                    <h2 class="post-title">The Rise of Artificial Intelligence in Healthcare</h2>
+                    <p class="post-excerpt">How AI is transforming patient care and medical diagnosis in unprecedented ways.</p>
+                    <a href="#" class="read-more">Read Article</a>
+                </article>
+                
+                <article class="blog-post animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+                    <div class="blog-meta">
+                        <span class="category-tag">Tips & Tricks</span>
+                        <span>By Mike Johnson</span>
+                        <span>4 min read</span>
+                    </div>
+                    <h2 class="post-title">Maximizing Productivity with Digital Tools</h2>
+                    <p class="post-excerpt">Essential software and strategies to boost your workflow efficiency.</p>
+                    <a href="#" class="read-more">Read Article</a>
+                </article>
+            </div>
+            
+            <div class="cta-section animate__animated animate__fadeIn">
+                <h3>Never Miss an Update</h3>
+                <p>Get the latest articles and insights delivered straight to your inbox.</p>
+                <a href="#" class="subscribe-button">Subscribe to Our Newsletter</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 Your Company Name. All rights reserved.</p>
+            <p>
+                <a href="#" style="color: #64748b;">Unsubscribe</a> | 
+                <a href="#" style="color: #64748b;">Privacy Policy</a>
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Add hover effects to blog posts
+        document.querySelectorAll('.blog-post').forEach(post => {
+            post.addEventListener('mouseover', () => {
+                post.style.transform = 'translateY(-5px)';
+                post.style.boxShadow = '0 10px 15px -3px rgba(0,0,0,0.1)';
+            });
+            
+            post.addEventListener('mouseout', () => {
+                post.style.transform = 'translateY(0)';
+                post.style.boxShadow = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

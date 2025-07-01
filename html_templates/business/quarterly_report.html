@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quarterly Business Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --primary-color: #EC4899;
+            --secondary-color: #DB2777;
+            --accent-color: #7C3AED;
+            --dark-bg: #1E293B;
+            --light-bg: #F8FAFC;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --text-dark: #1E293B;
+            --text-light: #F8FAFC;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background: var(--light-bg);
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-light);
+            padding: 60px 30px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .quarter-badge {
+            background: var(--accent-color);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-weight: 500;
+            animation: slide-in 1s ease-out;
+        }
+
+        @keyframes slide-in {
+            from {
+                transform: translateX(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .performance-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .performance-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .indicator {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .indicator-value {
+            font-size: 2em;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+
+        .trend {
+            display: flex;
+            align-items: center;
+            font-size: 0.9em;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .trend.positive {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .trend.negative {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        .chart-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-container {
+            height: 300px;
+            margin-top: 20px;
+        }
+
+        .highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .highlight-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .highlight-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 15px;
+        }
+
+        .projects-section {
+            margin: 40px 0;
+        }
+
+        .project-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-table th,
+        .project-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .project-table th {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .project-table tr:hover {
+            background: var(--light-bg);
+        }
+
+        .status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .status.completed {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .status.in-progress {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .status.delayed {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        .challenges-section {
+            margin: 40px 0;
+        }
+
+        .challenge-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .challenge-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .priority {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .priority.high {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        .priority.medium {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .next-steps {
+            background: var(--dark-bg);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+
+        .step-list {
+            margin-top: 20px;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .step-item:hover {
+            transform: translateX(10px);
+        }
+
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background: var(--primary-color);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .footer {
+            text-align: center;
+            color: var(--text-dark);
+            padding: 40px 0;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .performance-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <span class="quarter-badge">Q2 2025</span>
+            <h1 class="animate__animated animate__fadeInDown">Quarterly Business Report</h1>
+            <p>Performance Analysis and Strategic Overview</p>
+        </div>
+
+        <div class="performance-grid">
+            <div class="performance-card animate__animated animate__fadeInUp">
+                <h3>Revenue</h3>
+                <div class="indicator">
+                    <div class="indicator-value">$2.5M</div>
+                    <div class="trend positive">+15% ↑</div>
+                </div>
+                <p>Quarterly revenue growth exceeds targets</p>
+            </div>
+
+            <div class="performance-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+                <h3>Customer Acquisition</h3>
+                <div class="indicator">
+                    <div class="indicator-value">850</div>
+                    <div class="trend positive">+25% ↑</div>
+                </div>
+                <p>New customers this quarter</p>
+            </div>
+
+            <div class="performance-card animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
+                <h3>Operating Costs</h3>
+                <div class="indicator">
+                    <div class="indicator-value">$1.2M</div>
+                    <div class="trend negative">+5% ↑</div>
+                </div>
+                <p>Slight increase due to expansion</p>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <h2>Revenue Trends</h2>
+            <div class="chart-container">
+                <canvas id="revenueChart"></canvas>
+            </div>
+        </div>
+
+        <div class="highlights">
+            <div class="highlight-card animate__animated animate__fadeIn">
+                <div class="highlight-header">
+                    <div class="highlight-icon">🎯</div>
+                    <h3>Key Achievements</h3>
+                </div>
+                <ul>
+                    <li>Launched new product line</li>
+                    <li>Expanded to 3 new markets</li>
+                    <li>Achieved 98% customer satisfaction</li>
+                </ul>
+            </div>
+
+            <div class="highlight-card animate__animated animate__fadeIn" style="animation-delay: 0.2s">
+                <div class="highlight-header">
+                    <div class="highlight-icon">📈</div>
+                    <h3>Growth Areas</h3>
+                </div>
+                <ul>
+                    <li>Enterprise customer segment +40%</li>
+                    <li>Mobile platform adoption +65%</li>
+                    <li>International revenue +30%</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="projects-section">
+            <h2>Project Status</h2>
+            <div class="table-container">
+                <table class="project-table">
+                    <thead>
+                        <tr>
+                            <th>Project</th>
+                            <th>Status</th>
+                            <th>Progress</th>
+                            <th>Deadline</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mobile App 2.0</td>
+                            <td><span class="status completed">Completed</span></td>
+                            <td>100%</td>
+                            <td>Jun 15, 2025</td>
+                        </tr>
+                        <tr>
+                            <td>Cloud Migration</td>
+                            <td><span class="status in-progress">In Progress</span></td>
+                            <td>75%</td>
+                            <td>Jul 30, 2025</td>
+                        </tr>
+                        <tr>
+                            <td>CRM Integration</td>
+                            <td><span class="status delayed">Delayed</span></td>
+                            <td>40%</td>
+                            <td>Aug 15, 2025</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="challenges-section">
+            <h2>Challenges & Solutions</h2>
+            <div class="challenge-cards">
+                <div class="challenge-card animate__animated animate__fadeIn">
+                    <span class="priority high">High Priority</span>
+                    <h3>Supply Chain Disruption</h3>
+                    <p>Implementing alternative sourcing strategy and increasing inventory buffers</p>
+                </div>
+                <div class="challenge-card animate__animated animate__fadeIn" style="animation-delay: 0.2s">
+                    <span class="priority medium">Medium Priority</span>
+                    <h3>Talent Acquisition</h3>
+                    <p>Expanding recruitment channels and enhancing benefits package</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="next-steps animate__animated animate__fadeIn">
+            <h2>Strategic Priorities for Q3</h2>
+            <div class="step-list">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Market Expansion</h3>
+                        <p>Launch operations in Asian markets</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Product Development</h3>
+                        <p>Release AI-powered features</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Operational Excellence</h3>
+                        <p>Implement automated workflow systems</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 Your Company Name. All rights reserved.</p>
+            <p>
+                <a href="#" style="color: inherit;">Download Full Report</a> | 
+                <a href="#" style="color: inherit;">Share Report</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Initialize revenue chart
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Revenue ($M)',
+                    data: [1.8, 1.9, 2.1, 2.3, 2.4, 2.5],
+                    borderColor: '#EC4899',
+                    tension: 0.4,
+                    fill: true,
+                    backgroundColor: 'rgba(236, 72, 153, 0.1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Add animations on scroll
+        const animatedElements = document.querySelectorAll('.performance-card, .highlight-card, .challenge-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.style.opacity = '1';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        animatedElements.forEach(el => {
+            observer.observe(el);
+        });
+
+        // Animate performance indicators
+        document.querySelectorAll('.indicator-value').forEach(indicator => {
+            const value = indicator.textContent;
+            indicator.textContent = '0';
+            let current = 0;
+            const target = parseFloat(value.replace(/[^0-9.-]+/g, ''));
+            const increment = target / 50;
+
+            function updateCounter() {
+                current += increment;
+                if (current < target) {
+                    indicator.textContent = value.includes('$') ? 
+                        '$' + current.toFixed(1) + 'M' : 
+                        Math.round(current);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    indicator.textContent = value;
+                }
+            }
+
+            const counterObserver = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    updateCounter();
+                    counterObserver.unobserve(entries[0].target);
+                }
+            });
+
+            counterObserver.observe(indicator);
+        });
+    </script>
+</body>
+</html>

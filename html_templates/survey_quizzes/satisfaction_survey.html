@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Satisfaction Survey</title>
+    <style>
+        :root {
+            --primary-color: #2196F3;
+            --secondary-color: #1976D2;
+            --accent-color: #64B5F6;
+            --text-color: #333;
+            --background-color: #f5f5f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--background-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .survey-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--primary-color);
+            width: 0;
+            transition: width 0.4s ease;
+        }
+
+        .question-container {
+            margin: 20px 0;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .question {
+            font-size: 18px;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 15px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .option:hover {
+            border-color: var(--accent-color);
+            background: #f8f9fa;
+        }
+
+        .option.selected {
+            border-color: var(--primary-color);
+            background: #E3F2FD;
+        }
+
+        .rating {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+
+        .rating-option {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #e0e0e0;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .rating-option:hover {
+            border-color: var(--accent-color);
+            background: #f8f9fa;
+        }
+
+        .rating-option.selected {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            margin: 10px 0;
+            resize: vertical;
+            min-height: 100px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .thank-you {
+            text-align: center;
+            display: none;
+        }
+
+        .thank-you.visible {
+            display: block;
+            animation: scaleIn 0.5s ease;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .survey-container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .question {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="survey-container">
+        <h1>Customer Satisfaction Survey</h1>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        <div id="survey-content">
+            <div class="question-container" data-question="1">
+                <div class="question">How satisfied are you with our service?</div>
+                <div class="rating">
+                    <div class="rating-option" data-value="1">1</div>
+                    <div class="rating-option" data-value="2">2</div>
+                    <div class="rating-option" data-value="3">3</div>
+                    <div class="rating-option" data-value="4">4</div>
+                    <div class="rating-option" data-value="5">5</div>
+                </div>
+            </div>
+
+            <div class="question-container" style="display: none;" data-question="2">
+                <div class="question">Would you recommend our service to others?</div>
+                <div class="options">
+                    <div class="option" data-value="yes">Definitely</div>
+                    <div class="option" data-value="maybe">Maybe</div>
+                    <div class="option" data-value="no">No</div>
+                </div>
+            </div>
+
+            <div class="question-container" style="display: none;" data-question="3">
+                <div class="question">What aspects of our service could be improved?</div>
+                <textarea placeholder="Please share your thoughts..."></textarea>
+            </div>
+
+            <button class="button" id="next-btn">Next</button>
+        </div>
+
+        <div class="thank-you" id="thank-you">
+            <h2>Thank You!</h2>
+            <p>Your feedback is greatly appreciated.</p>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+        const totalQuestions = 3;
+        const answers = {};
+
+        function updateProgress() {
+            const progress = ((currentQuestion - 1) / totalQuestions) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+        }
+
+        function showQuestion(questionNumber) {
+            document.querySelectorAll('.question-container').forEach(container => {
+                container.style.display = 'none';
+            });
+            document.querySelector(`[data-question="${questionNumber}"]`).style.display = 'block';
+            updateProgress();
+        }
+
+        // Rating options
+        document.querySelectorAll('.rating-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.rating-option').forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                answers[currentQuestion] = option.dataset.value;
+                document.getElementById('next-btn').disabled = false;
+            });
+        });
+
+        // Multiple choice options
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                answers[currentQuestion] = option.dataset.value;
+                document.getElementById('next-btn').disabled = false;
+            });
+        });
+
+        // Text area
+        document.querySelector('textarea').addEventListener('input', (e) => {
+            answers[currentQuestion] = e.target.value;
+            document.getElementById('next-btn').disabled = !e.target.value.trim();
+        });
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            if (currentQuestion < totalQuestions) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+                document.getElementById('next-btn').disabled = !answers[currentQuestion];
+            } else {
+                document.getElementById('survey-content').style.display = 'none';
+                document.getElementById('thank-you').classList.add('visible');
+                document.getElementById('progress').style.width = '100%';
+            }
+        });
+
+        // Initialize
+        updateProgress();
+        document.getElementById('next-btn').disabled = true;
+    </script>
+</body>
+</html>

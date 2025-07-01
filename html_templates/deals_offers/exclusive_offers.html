@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exclusive VIP Offers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --primary: #1E293B;
+            --secondary: #0F172A;
+            --accent: #D4AF37;
+            --background: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text: #1E293B;
+            --gold-gradient: linear-gradient(135deg, #D4AF37, #FBF5E3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .vip-header {
+            background: var(--primary);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vip-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .vip-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4AF37' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .exclusive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .exclusive-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transform: perspective(1000px);
+            transition: all 0.5s ease;
+            position: relative;
+        }
+
+        .exclusive-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gold-gradient);
+        }
+
+        .exclusive-card:hover {
+            transform: perspective(1000px) scale(1.02) rotateY(5deg);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .offer-image {
+            position: relative;
+            padding-top: 60%;
+            background: #F1F5F9;
+            overflow: hidden;
+        }
+
+        .offer-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .exclusive-card:hover .offer-image img {
+            transform: scale(1.1);
+        }
+
+        .vip-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--gold-gradient);
+            color: var(--primary);
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            box-shadow: 0 4px 6px rgba(212, 175, 55, 0.3);
+            z-index: 1;
+        }
+
+        .offer-content {
+            padding: 2rem;
+        }
+
+        .offer-category {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .offer-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .offer-description {
+            color: #64748B;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .price-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .original-price {
+            color: #94A3B8;
+            text-decoration: line-through;
+            font-size: 1rem;
+        }
+
+        .vip-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .savings {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .claim-offer {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .claim-offer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .claim-offer:hover::before {
+            left: 100%;
+        }
+
+        .claim-offer:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        .benefit {
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .benefit:hover {
+            transform: translateY(-5px);
+        }
+
+        .benefit-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .benefit-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            .vip-header h1 {
+                font-size: 2rem;
+            }
+
+            .exclusive-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="vip-header">
+        <h1 class="animate__animated animate__fadeInDown">VIP Exclusive Offers</h1>
+        <p class="animate__animated animate__fadeIn">Discover our most prestigious deals, handpicked for our valued members</p>
+    </header>
+
+    <div class="container">
+        <div class="exclusive-grid">
+            <div class="exclusive-card animate__animated animate__fadeInUp">
+                <div class="offer-image">
+                    <span class="vip-badge">VIP Exclusive</span>
+                    <img src="https://via.placeholder.com/600x400" alt="Luxury Watch">
+                </div>
+                <div class="offer-content">
+                    <div class="offer-category">Luxury Timepieces</div>
+                    <h2 class="offer-title">Limited Edition Chronograph</h2>
+                    <p class="offer-description">Experience unparalleled craftsmanship with this exclusive timepiece. Limited to 100 pieces worldwide.</p>
+                    <div class="price-row">
+                        <div class="price-container">
+                            <span class="original-price">$12,999</span>
+                            <span class="vip-price">$8,999</span>
+                        </div>
+                        <span class="savings">Save $4,000</span>
+                    </div>
+                    <a href="#" class="claim-offer">Claim VIP Offer</a>
+                </div>
+            </div>
+            <!-- Add more exclusive-card elements here -->
+        </div>
+
+        <div class="benefits">
+            <div class="benefit animate__animated animate__fadeIn">
+                <div class="benefit-icon">👑</div>
+                <h3 class="benefit-title">VIP Concierge</h3>
+                <p>Personal shopping assistance and priority service</p>
+            </div>
+            <div class="benefit animate__animated animate__fadeIn" style="animation-delay: 0.2s">
+                <div class="benefit-icon">✈️</div>
+                <h3 class="benefit-title">White Glove Delivery</h3>
+                <p>Complimentary worldwide express shipping</p>
+            </div>
+            <div class="benefit animate__animated animate__fadeIn" style="animation-delay: 0.4s">
+                <div class="benefit-icon">🎁</div>
+                <h3 class="benefit-title">Exclusive Perks</h3>
+                <p>Special gifts and early access to new collections</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.exclusive-card, .benefit').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', setupScrollAnimations);
+    </script>
+</body>
+</html>

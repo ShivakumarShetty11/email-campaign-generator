@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --secondary: #4338CA;
+            --accent: #10B981;
+            --background: #F9FAFB;
+            --text: #111827;
+            --light-text: #6B7280;
+            --border: #E5E7EB;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 2rem;
+        }
+
+        .product-gallery {
+            position: relative;
+        }
+
+        .main-image {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 1rem;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .main-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .thumbnail-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .thumbnail {
+            aspect-ratio: 1;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumbnail:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .product-info {
+            padding: 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-category {
+            color: var(--primary);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .product-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .product-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .original-price {
+            font-size: 1.25rem;
+            color: var(--light-text);
+            text-decoration: line-through;
+        }
+
+        .discount-badge {
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .product-description {
+            color: var(--light-text);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .variant-options {
+            margin-bottom: 2rem;
+        }
+
+        .variant-label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .variant-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .variant-btn {
+            padding: 0.5rem 1.5rem;
+            border: 2px solid var(--border);
+            border-radius: 0.5rem;
+            background: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .variant-btn:hover,
+        .variant-btn.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: var(--background);
+            border-radius: 0.5rem;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .quantity-input {
+            width: 60px;
+            height: 40px;
+            text-align: center;
+            border: 2px solid var(--border);
+            border-radius: 0.5rem;
+            font-weight: 600;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .add-to-cart:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .buy-now {
+            width: 100%;
+            padding: 1rem;
+            background: none;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .buy-now:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .feature-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-text {
+            color: var(--light-text);
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="product-grid">
+            <div class="product-gallery animate__animated animate__fadeIn">
+                <div class="main-image">
+                    <img src="https://via.placeholder.com/600" alt="Product Image" id="mainImage">
+                </div>
+                <div class="thumbnail-grid">
+                    <div class="thumbnail" onclick="updateMainImage(this)">
+                        <img src="https://via.placeholder.com/150" alt="Thumbnail 1">
+                    </div>
+                    <div class="thumbnail" onclick="updateMainImage(this)">
+                        <img src="https://via.placeholder.com/150" alt="Thumbnail 2">
+                    </div>
+                    <div class="thumbnail" onclick="updateMainImage(this)">
+                        <img src="https://via.placeholder.com/150" alt="Thumbnail 3">
+                    </div>
+                    <div class="thumbnail" onclick="updateMainImage(this)">
+                        <img src="https://via.placeholder.com/150" alt="Thumbnail 4">
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-info animate__animated animate__fadeIn">
+                <div class="product-category">Electronics</div>
+                <h1 class="product-title">Premium Wireless Headphones</h1>
+                <div class="product-price">
+                    <span>$199.99</span>
+                    <span class="original-price">$299.99</span>
+                    <span class="discount-badge">33% OFF</span>
+                </div>
+
+                <p class="product-description">
+                    Experience premium sound quality with our latest wireless headphones. 
+                    Featuring active noise cancellation, 30-hour battery life, and 
+                    premium comfort for extended listening sessions.
+                </p>
+
+                <div class="variant-options">
+                    <label class="variant-label">Color</label>
+                    <div class="variant-buttons">
+                        <button class="variant-btn active">Black</button>
+                        <button class="variant-btn">White</button>
+                        <button class="variant-btn">Blue</button>
+                    </div>
+                </div>
+
+                <div class="quantity-selector">
+                    <label class="variant-label">Quantity</label>
+                    <button class="quantity-btn" onclick="updateQuantity(-1)">-</button>
+                    <input type="number" class="quantity-input" value="1" min="1" max="10" id="quantity">
+                    <button class="quantity-btn" onclick="updateQuantity(1)">+</button>
+                </div>
+
+                <button class="add-to-cart">Add to Cart</button>
+                <button class="buy-now">Buy Now</button>
+            </div>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card animate-on-scroll">
+                <div class="feature-icon">🚚</div>
+                <h3 class="feature-title">Free Shipping</h3>
+                <p class="feature-text">Free shipping on orders over $50</p>
+            </div>
+            <div class="feature-card animate-on-scroll">
+                <div class="feature-icon">↩️</div>
+                <h3 class="feature-title">Easy Returns</h3>
+                <p class="feature-text">30-day money back guarantee</p>
+            </div>
+            <div class="feature-card animate-on-scroll">
+                <div class="feature-icon">🛡️</div>
+                <h3 class="feature-title">Warranty</h3>
+                <p class="feature-text">2-year manufacturer warranty</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateMainImage(thumbnail) {
+            const mainImage = document.getElementById('mainImage');
+            mainImage.src = thumbnail.querySelector('img').src.replace('150', '600');
+            
+            // Update active state
+            document.querySelectorAll('.thumbnail').forEach(thumb => {
+                thumb.style.borderColor = 'transparent';
+            });
+            thumbnail.style.borderColor = 'var(--primary)';
+        }
+
+        function updateQuantity(change) {
+            const input = document.getElementById('quantity');
+            const newValue = Math.max(1, Math.min(10, parseInt(input.value) + change));
+            input.value = newValue;
+        }
+
+        // Scroll animations
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+        // Variant button click handling
+        document.querySelectorAll('.variant-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.variant-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

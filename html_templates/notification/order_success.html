@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Success</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #22C55E;
+            --secondary-color: #10B981;
+            --background-color: #F0FDF4;
+            --text-color: #1F2937;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Nunito', sans-serif;
+            background: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 90%;
+            margin: 20px;
+            perspective: 1000px;
+        }
+
+        .notification-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: flipIn 0.8s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        .success-icon {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 3em;
+            color: white;
+            position: relative;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        .success-icon::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            border-radius: 50%;
+            z-index: -1;
+            animation: pulse 2s infinite;
+        }
+
+        h1 {
+            color: var(--text-color);
+            text-align: center;
+            margin: 20px 0;
+            font-size: 2em;
+        }
+
+        .order-details {
+            background: var(--background-color);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            animation: slideUp 0.5s ease-out 0.3s both;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 10px;
+            border-bottom: 1px dashed rgba(34, 197, 94, 0.2);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .tracking-progress {
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: #E5E7EB;
+            border-radius: 2px;
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+            width: 0;
+            animation: fillProgress 1s ease-out forwards;
+        }
+
+        .step-markers {
+            display: flex;
+            justify-content: space-between;
+            margin-top: -12px;
+        }
+
+        .step-marker {
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            position: relative;
+            z-index: 1;
+            animation: popIn 0.3s ease-out forwards;
+            opacity: 0;
+        }
+
+        .step-marker.active {
+            background: var(--primary-color);
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(34, 197, 94, 0.3);
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--primary-color);
+            opacity: 0;
+        }
+
+        @keyframes flipIn {
+            from {
+                transform: rotateX(-90deg);
+                opacity: 0;
+            }
+            to {
+                transform: rotateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fillProgress {
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+            }
+
+            .notification-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="notification-card">
+            <div class="success-icon">✓</div>
+            <h1>Order Confirmed!</h1>
+            
+            <div class="order-details">
+                <div class="detail-row">
+                    <span>Order Number:</span>
+                    <span>#ORD-2025-06-11</span>
+                </div>
+                <div class="detail-row">
+                    <span>Total Amount:</span>
+                    <span>$249.99</span>
+                </div>
+                <div class="detail-row">
+                    <span>Estimated Delivery:</span>
+                    <span>June 15, 2025</span>
+                </div>
+            </div>
+
+            <div class="tracking-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <div class="step-markers">
+                    <div class="step-marker active"></div>
+                    <div class="step-marker"></div>
+                    <div class="step-marker"></div>
+                    <div class="step-marker"></div>
+                </div>
+            </div>
+
+            <a href="#track" class="button">Track Order</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate step markers
+            const markers = document.querySelectorAll('.step-marker');
+            markers.forEach((marker, index) => {
+                setTimeout(() => {
+                    marker.style.animation = `popIn 0.3s ease-out forwards ${index * 0.2}s`;
+                }, 500);
+            });
+
+            // Create confetti effect
+            function createConfetti() {
+                const colors = ['#22C55E', '#10B981', '#34D399', '#6EE7B7'];
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = '-10px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                
+                document.body.appendChild(confetti);
+
+                confetti.animate([
+                    { transform: `translate(0, 0) rotate(0deg)`, opacity: 1 },
+                    { transform: `translate(${Math.random() * 100 - 50}px, 100vh) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+                ], {
+                    duration: 2000,
+                    easing: 'cubic-bezier(.37,0,.63,1)'
+                });
+
+                setTimeout(() => confetti.remove(), 2000);
+            }
+
+            // Create multiple confetti pieces
+            for (let i = 0; i < 50; i++) {
+                setTimeout(createConfetti, Math.random() * 1000);
+            }
+
+            // Add hover effect sound
+            const button = document.querySelector('.button');
+            button.addEventListener('mouseenter', () => {
+                const audio = new Audio('data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4LjI5LjEwMAAAAAAAAAAAAAAA//tQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAAFbgBtbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1t//////////////////////////////////////////////////////////////////8AAAAATGF2YzU4LjU0AAAAAAAAAAAAAAAAJAAAAAAAAAAAAQVuiZi6AAAAAAAAAAAAAAAAAAAAAP/7kGQAAANUMEEFPeAEKYYX+JmksQ8YwQUR94AQlhhg4GaQoAAAAAgADhhPIEOCDggQ5P4IBBBD7qJBv/OSCf1ggEHkgg8vkH35BBBBB/5/RB44IMIABBBBAMQQcMQOCBwQIcHQQQQQQQQQQQQQQQQQBAEAQBAMQQBAEAQBAEAQBAMQQBAEAQBAEAQBAMQQBAEAQBAEAQBAMQQBAEAQBAEAQBCEIQhCEIQhCEIQhCEIAAAABkYkznAAAIAAAAAgCAIZGXOcAAAgAAAAGRiTO8AQBCEIQhCEAAABAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAAQ');
+                audio.play();
+            });
+        });
+    </script>
+</body>
+</html>

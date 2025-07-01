@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Feedback Survey</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #388E3C;
+            --accent-color: #81C784;
+            --text-color: #2c3e50;
+            --background-color: #f0f4f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--background-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .survey-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideIn 0.6s ease forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .step.active {
+            background: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        .step.completed {
+            background: var(--secondary-color);
+        }
+
+        .step::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #e0e0e0;
+            right: -100%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .step:last-child::after {
+            display: none;
+        }
+
+        .question-container {
+            margin: 20px 0;
+            opacity: 0;
+            transform: translateX(20px);
+            animation: fadeInRight 0.5s ease forwards;
+        }
+
+        @keyframes fadeInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .question {
+            font-size: 18px;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            border-color: var(--accent-color);
+            background: #f8f9fa;
+            transform: translateY(-2px);
+        }
+
+        .feature-card.selected {
+            border-color: var(--primary-color);
+            background: #E8F5E9;
+        }
+
+        .rating-stars {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .star {
+            font-size: 24px;
+            color: #e0e0e0;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #FFD700;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            margin: 10px 0;
+            resize: vertical;
+            min-height: 120px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .thank-you {
+            text-align: center;
+            display: none;
+        }
+
+        .thank-you.visible {
+            display: block;
+            animation: popIn 0.5s ease;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .survey-container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .question {
+                font-size: 16px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="survey-container">
+        <h1>Product Feedback</h1>
+        <div class="steps">
+            <div class="step active" data-step="1">1</div>
+            <div class="step" data-step="2">2</div>
+            <div class="step" data-step="3">3</div>
+        </div>
+        <div id="survey-content">
+            <div class="question-container" data-question="1">
+                <div class="question">Which features do you use most frequently?</div>
+                <div class="features-grid">
+                    <div class="feature-card" data-value="feature1">Feature 1</div>
+                    <div class="feature-card" data-value="feature2">Feature 2</div>
+                    <div class="feature-card" data-value="feature3">Feature 3</div>
+                    <div class="feature-card" data-value="feature4">Feature 4</div>
+                </div>
+            </div>
+
+            <div class="question-container" style="display: none;" data-question="2">
+                <div class="question">How would you rate the overall user experience?</div>
+                <div class="rating-stars">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+            </div>
+
+            <div class="question-container" style="display: none;" data-question="3">
+                <div class="question">What improvements would you suggest?</div>
+                <textarea placeholder="Your suggestions help us improve..."></textarea>
+            </div>
+
+            <button class="button" id="next-btn">Next</button>
+        </div>
+
+        <div class="thank-you" id="thank-you">
+            <h2>Thank You for Your Feedback!</h2>
+            <p>Your input helps us make our product better.</p>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+        const totalQuestions = 3;
+        const answers = {};
+
+        function updateSteps() {
+            document.querySelectorAll('.step').forEach(step => {
+                const stepNum = parseInt(step.dataset.step);
+                step.classList.remove('active', 'completed');
+                if (stepNum === currentQuestion) {
+                    step.classList.add('active');
+                } else if (stepNum < currentQuestion) {
+                    step.classList.add('completed');
+                }
+            });
+        }
+
+        function showQuestion(questionNumber) {
+            document.querySelectorAll('.question-container').forEach(container => {
+                container.style.display = 'none';
+            });
+            document.querySelector(`[data-question="${questionNumber}"]`).style.display = 'block';
+            updateSteps();
+        }
+
+        // Feature selection
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('click', () => {
+                card.classList.toggle('selected');
+                const selectedFeatures = Array.from(document.querySelectorAll('.feature-card.selected'))
+                    .map(card => card.dataset.value);
+                answers[currentQuestion] = selectedFeatures;
+                document.getElementById('next-btn').disabled = selectedFeatures.length === 0;
+            });
+        });
+
+        // Star rating
+        document.querySelectorAll('.star').forEach(star => {
+            star.addEventListener('click', () => {
+                const value = parseInt(star.dataset.value);
+                document.querySelectorAll('.star').forEach((s, index) => {
+                    s.classList.toggle('active', index < value);
+                });
+                answers[currentQuestion] = value;
+                document.getElementById('next-btn').disabled = false;
+            });
+        });
+
+        // Text area
+        document.querySelector('textarea').addEventListener('input', (e) => {
+            answers[currentQuestion] = e.target.value;
+            document.getElementById('next-btn').disabled = !e.target.value.trim();
+        });
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            if (currentQuestion < totalQuestions) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+                document.getElementById('next-btn').disabled = !answers[currentQuestion];
+            } else {
+                document.getElementById('survey-content').style.display = 'none';
+                document.getElementById('thank-you').classList.add('visible');
+            }
+        });
+
+        // Initialize
+        updateSteps();
+        document.getElementById('next-btn').disabled = true;
+    </script>
+</body>
+</html>
