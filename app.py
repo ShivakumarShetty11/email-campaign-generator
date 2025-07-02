@@ -6,6 +6,7 @@ from datetime import datetime
 import random
 import hashlib
 import base64
+from premailer import transform
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from google.auth.transport.requests import Request
@@ -967,6 +968,8 @@ TEMPLATE_HTML:
 
         result = response.json()
         finalized_html = result['choices'][0]['message']['content']
+        finalized_html = transform(finalized_html)  # This inlines the CSS for email clients
+
 
         return jsonify({'success': True, 'finalized_html': finalized_html})
 
@@ -974,42 +977,6 @@ TEMPLATE_HTML:
         print(f"Error parsing Groq response: {e}")
         return jsonify({'success': False, 'error': f'Parsing error: {str(e)}'})
 
-
-# @app.route('/integrate-content-template', methods=['POST'])
-# def integrate_content_template():
-#     data = request.get_json()
-#     content = data.get('content')
-#     template_html = data.get('template_html')
-#     if not content or not template_html:
-#         return jsonify({'success': False, 'error': 'Missing content or template_html'})
-
-#     groq_api_key = os.getenv('GROQ_API_KEY')
-#     if not groq_api_key:
-#         return jsonify({'success': False, 'error': 'GROQ_API_KEY not set in environment'})
-
-#     url = "https://api.groq.com/openai/v1/chat/completions"
-#     headers = {
-#         "Authorization": f"Bearer {groq_api_key}",
-#         "Content-Type": "application/json"
-#     }
-#     payload = {
-#         "model": "mixtral-8x7b-32768",
-#         "messages": [
-#             {"role": "system", "content": "You are an expert email formatter. Integrate the following content into the given HTML template."},
-#             {"role": "user", "content": f"CONTENT:\n{content}\n\nTEMPLATE_HTML:\n{template_html}"}
-#         ],
-#         "temperature": 0.7
-#     }
-
-#     response = requests.post(url, headers=headers, json=payload)
-#     if response.status_code == 200:
-#         result = response.json()
-#         finalized_html = result['choices'][0]['message']['content']
-#         return jsonify({'success': True, 'finalized_html': finalized_html})
-#     else:
-#         return jsonify({'success': False, 'error': response.text})
-    
-    
 
 @app.route('/send-finalized-mail', methods=['POST'])
 def send_finalized_mail():
