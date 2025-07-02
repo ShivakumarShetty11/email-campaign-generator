@@ -917,6 +917,7 @@ def get_campaign_variants(campaign_id):
     conn.close()
     return jsonify({'success': True, 'variants': variants})
 
+
 @app.route('/integrate-content-template', methods=['POST'])
 def integrate_content_template():
     data = request.get_json()
@@ -948,7 +949,7 @@ TEMPLATE_HTML:
 """
 
     payload = {
-        "model": "mixtral-8x7b-32768",
+        "model": "llama3-70b-8192",
         "messages": [
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": prompt}
@@ -961,7 +962,6 @@ TEMPLATE_HTML:
         print(json.dumps(payload, indent=2))
 
         response = requests.post(url, headers=headers, json=payload)
-
         print("Raw Groq response:")
         print(response.text)
 
