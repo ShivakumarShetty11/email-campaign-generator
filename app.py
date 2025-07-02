@@ -967,8 +967,35 @@ TEMPLATE_HTML:
         print(response.text)
 
         result = response.json()
-        finalized_html = result['choices'][0]['message']['content']
-        finalized_html = transform(finalized_html)  # This inlines the CSS for email clients
+        raw_html = result['choices'][0]['message']['content']
+
+
+
+# Step 1: Remove markdown-style HTML block markers
+        if "```html" in raw_html:
+            raw_html = raw_html.split("```html", 1)[-1]
+        if "```" in raw_html:
+            raw_html = raw_html.split("```", 1)[0]
+
+# Step 2: Strip typical AI wrap-up lines
+        wrapup_phrases = [
+        "Let me know if you need any further assistance",
+        "Let me know if you need anything else",
+        "Hope this helps",
+        "Have a great day",
+        "Happy to help"
+        ]
+        for phrase in wrapup_phrases:
+            if phrase.lower() in raw_html.lower():
+                raw_html = raw_html[:raw_html.lower().find(phrase.lower())].strip()
+
+# Step 3: Remove "Here is..." intro text
+        raw_html = raw_html.strip()
+        if raw_html.lower().startswith("here is"):
+            raw_html = raw_html[raw_html.find("<"):]
+
+# Inline CSS
+        finalized_html = transform(raw_html)
 
 
         return jsonify({'success': True, 'finalized_html': finalized_html})
