@@ -922,6 +922,7 @@ def integrate_content_template():
     data = request.get_json()
     content = data.get('content')
     template_html = data.get('template_html')
+
     if not content or not template_html:
         return jsonify({'success': False, 'error': 'Missing content or template_html'})
 
@@ -934,22 +935,79 @@ def integrate_content_template():
         "Authorization": f"Bearer {groq_api_key}",
         "Content-Type": "application/json"
     }
+
+    prompt = f"""You are an expert email formatter.
+Integrate the following content into the provided HTML template.
+Make sure to preserve styles and formatting.
+
+CONTENT:
+{content}
+
+TEMPLATE_HTML:
+{template_html}
+"""
+
     payload = {
         "model": "mixtral-8x7b-32768",
         "messages": [
-            {"role": "system", "content": "You are an expert email formatter. Integrate the following content into the given HTML template."},
-            {"role": "user", "content": f"CONTENT:\n{content}\n\nTEMPLATE_HTML:\n{template_html}"}
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": prompt}
         ],
         "temperature": 0.7
     }
 
-    response = requests.post(url, headers=headers, json=payload)
-    if response.status_code == 200:
+    try:
+        print("Payload sent to Groq:")
+        print(json.dumps(payload, indent=2))
+
+        response = requests.post(url, headers=headers, json=payload)
+
+        print("Raw Groq response:")
+        print(response.text)
+
         result = response.json()
         finalized_html = result['choices'][0]['message']['content']
+
         return jsonify({'success': True, 'finalized_html': finalized_html})
-    else:
-        return jsonify({'success': False, 'error': response.text})
+
+    except Exception as e:
+        print(f"Error parsing Groq response: {e}")
+        return jsonify({'success': False, 'error': f'Parsing error: {str(e)}'})
+
+
+# @app.route('/integrate-content-template', methods=['POST'])
+# def integrate_content_template():
+#     data = request.get_json()
+#     content = data.get('content')
+#     template_html = data.get('template_html')
+#     if not content or not template_html:
+#         return jsonify({'success': False, 'error': 'Missing content or template_html'})
+
+#     groq_api_key = os.getenv('GROQ_API_KEY')
+#     if not groq_api_key:
+#         return jsonify({'success': False, 'error': 'GROQ_API_KEY not set in environment'})
+
+#     url = "https://api.groq.com/openai/v1/chat/completions"
+#     headers = {
+#         "Authorization": f"Bearer {groq_api_key}",
+#         "Content-Type": "application/json"
+#     }
+#     payload = {
+#         "model": "mixtral-8x7b-32768",
+#         "messages": [
+#             {"role": "system", "content": "You are an expert email formatter. Integrate the following content into the given HTML template."},
+#             {"role": "user", "content": f"CONTENT:\n{content}\n\nTEMPLATE_HTML:\n{template_html}"}
+#         ],
+#         "temperature": 0.7
+#     }
+
+#     response = requests.post(url, headers=headers, json=payload)
+#     if response.status_code == 200:
+#         result = response.json()
+#         finalized_html = result['choices'][0]['message']['content']
+#         return jsonify({'success': True, 'finalized_html': finalized_html})
+#     else:
+#         return jsonify({'success': False, 'error': response.text})
     
     
 
