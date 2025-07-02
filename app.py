@@ -925,28 +925,33 @@ def integrate_content_template():
     if not content or not template_html:
         return jsonify({'success': False, 'error': 'Missing content or template_html'})
 
-    # --- Call Groq API here ---
     groq_api_key = os.getenv('GROQ_API_KEY')
     if not groq_api_key:
         return jsonify({'success': False, 'error': 'GROQ_API_KEY not set in environment'})
 
-    url = "https://api.groq.com/openai/v1/chat/completions" 
+    url = "https://api.groq.com/openai/v1/chat/completions"
     headers = {
         "Authorization": f"Bearer {groq_api_key}",
         "Content-Type": "application/json"
     }
     payload = {
-        "content": content,
-        "template_html": template_html
+        "model": "mixtral-8x7b-32768",
+        "messages": [
+            {"role": "system", "content": "You are an expert email formatter. Integrate the following content into the given HTML template."},
+            {"role": "user", "content": f"CONTENT:\n{content}\n\nTEMPLATE_HTML:\n{template_html}"}
+        ],
+        "temperature": 0.7
     }
+
     response = requests.post(url, headers=headers, json=payload)
     if response.status_code == 200:
         result = response.json()
-        # Adjust this depending on Groq's response structure
-        finalized_html = result.get('finalized_html', '')
+        finalized_html = result['choices'][0]['message']['content']
         return jsonify({'success': True, 'finalized_html': finalized_html})
     else:
         return jsonify({'success': False, 'error': response.text})
+    
+    
 
 @app.route('/send-finalized-mail', methods=['POST'])
 def send_finalized_mail():
